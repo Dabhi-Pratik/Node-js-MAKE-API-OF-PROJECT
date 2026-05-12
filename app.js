@@ -7,9 +7,13 @@ import HttpError from "./middleware/HttpError.js";
 import connectDB from "./config/db.js";
 import mongoose from "mongoose";
 
+import userRouter from "./Router/userRouter.js";
+
 const app = express();
 
 app.use(express.json());
+
+app.use("/user", userRouter);
 
 app.get("/", (req, res) => {
   res.status(200).json("Hello from Server.....!");
@@ -39,10 +43,9 @@ async function startServer() {
       console.log(`Server Running on Port ${port}`);
     });
   } catch (error) {
-    console.log(error.message)
-    process.exit(1)
+    console.log(error.message);
+    process.exit(1);
   }
 }
 
-
-startServer()
+startServer();
