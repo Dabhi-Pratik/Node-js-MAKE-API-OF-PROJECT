@@ -1,15 +1,15 @@
-import HttpError from "../middleware/HttpError.js";
+import HttpError from "./HttpError.js";
 
 const checkRole =
   (...role) =>
   async (req, res, next) => {
     try {
       if (!req.user) {
-        return next(new HttpError("UnAuthorization", 401));
+        return next(new HttpError("Unauthorized User", 401));
       }
 
       if (!role.includes(req.user.role)) {
-        return next(new HttpError("Access Denied...!"));
+        return next(new HttpError("Access Denied...!", 403));
       }
 
       next();

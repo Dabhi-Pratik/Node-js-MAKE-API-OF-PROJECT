@@ -1,29 +1,34 @@
 import mongoose from "mongoose";
 
-const bookSchema = new mongoose.Schema({
-  bookName: {
-    type: String,
-    required: true,
+const bookSchema = new mongoose.Schema(
+  {
+    bookName: {
+      type: String,
+      required: true,
+    },
+    author: {
+      type: String,
+      required: true,
+    },
+    totalCopies: {
+      type: Number,
+      required: true,
+    },
+    availableCopies: {
+      type: Number,
+      required: true,
+    },
+    bookImage: {
+      type: String,
+    },
+    cloudinary_id: {
+      type: String,
+    },
   },
-  author: {
-    type: String,
-    required: true,
+  {
+    timestamps: true,
   },
-  totalCopies: {
-    type: Number,
-    required: true,
-  },
-  availableCopies: {
-    type: Number,
-    required: true,
-  },
-  bookImage: {
-    type: String,
-  },
-  cloudinary_id: {
-    type: String,
-  },
-});
+);
 
 const Book = mongoose.model("Book", bookSchema);
 

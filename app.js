@@ -8,12 +8,16 @@ import connectDB from "./config/db.js";
 import mongoose from "mongoose";
 
 import userRouter from "./Router/userRouter.js";
+import adminRouter from "./Router/adminRouter.js";
+import borrowRouter from "./Router/borrowRouter.js";
 
 const app = express();
 
 app.use(express.json());
 
 app.use("/user", userRouter);
+app.use("/admin", adminRouter);
+app.use("/borrow", borrowRouter);
 
 app.get("/", (req, res) => {
   res.status(200).json("Hello from Server.....!");

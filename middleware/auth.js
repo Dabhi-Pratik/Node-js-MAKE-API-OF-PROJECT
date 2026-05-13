@@ -12,21 +12,26 @@ const auth = async (req, res, next) => {
 
     const token = authHeader.replace("Bearer ", "");
 
-    const decode = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    const user = await User.findOne({ _id: decode._id, "tokens.token": token });
+    const user = await User.findOne({
+      _id: decoded._id,
+      "tokens.token": token,
+    });
 
     if (!user) {
-      return next(new HttpError("Please Authentication", 401));
+      return next(new HttpError("Please Authenticate", 401));
     }
 
-    req.user = user
-    req.token = token
+    req.user = user;
+    req.token = token;
 
-    next()
+    next();
   } catch (error) {
-    next(new HttpError(error.message))
+    console.log(error);
+
+    next(new HttpError(error.message, 500));
   }
 };
 
-export default auth
+export default auth;
