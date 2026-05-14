@@ -7,7 +7,11 @@ const auth = async (req, res, next) => {
     const authHeader = req.header("Authorization");
 
     if (!authHeader) {
-      return next(new HttpError("Authorization header is Required", 400));
+      return next(new HttpError("Auth Header is Required..!", 401));
+    }
+
+    if (!authHeader.startsWith("Bearer ")) {
+      return next(new HttpError("Invalid Token Format!", 401));
     }
 
     const token = authHeader.replace("Bearer ", "");
@@ -20,7 +24,7 @@ const auth = async (req, res, next) => {
     });
 
     if (!user) {
-      return next(new HttpError("Please Authenticate", 401));
+      return next(new HttpError("Authorization Failed.....", 401));
     }
 
     req.user = user;
@@ -30,7 +34,7 @@ const auth = async (req, res, next) => {
   } catch (error) {
     console.log(error);
 
-    next(new HttpError(error.message, 500));
+    return next(new HttpError("Please Authenticate First..!", 401));
   }
 };
 

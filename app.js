@@ -28,13 +28,14 @@ app.use((req, res, next) => {
 });
 
 app.use((error, req, res, next) => {
-  if (!req.headersSent) {
+  if (res.headersSent) {
     return next(error);
   }
 
-  res
-    .status(error.statusCode || 500)
-    .json(error.message || "Internal Server Error...!");
+  res.status(error.statusCode || 500).json({
+    success: false,
+    message: error.message || "Internal Server Error...!",
+  });
 });
 
 async function startServer() {
